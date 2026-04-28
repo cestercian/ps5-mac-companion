@@ -1,0 +1,10 @@
+.build/
+.swiftpm/
+DerivedData/
+*.xcodeproj/
+.DS_Store
+Package.resolved
+DualSenseMac.app/
+PS5MacCompanion.app/
+ps5-controller-control-macbool/
+Dualsense-Multiplatform/
