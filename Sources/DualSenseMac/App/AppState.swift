@@ -94,11 +94,12 @@ final class AppState: ObservableObject {
     }
 
     func pushOutput() {
-        // Lightbar + triggers via GameController.framework — these are the paths
-        // macOS 26 honors reliably (raw HID writes are silently filtered). We
-        // still send raw HID for rumble + LEDs (those DO work).
+        // All three driveable features via GameController.framework — the only
+        // paths macOS 26 honors reliably. Raw HID writes are silently filtered
+        // for lightbar/triggers/rumble.
         gcBridge.setLightbar(profile.lightbar)
         gcBridge.setTriggers(left: profile.leftTrigger, right: profile.rightTrigger)
+        gcBridge.setRumble(profile.rumble)
 
         guard let device else { return }
         let report = OutputReport(

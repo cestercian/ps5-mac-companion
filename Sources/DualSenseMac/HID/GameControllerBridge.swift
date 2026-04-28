@@ -1,5 +1,6 @@
 import Foundation
 import GameController
+import CoreHaptics
 
 /// Wraps Apple's `GameController.framework` so we can drive the lightbar via the
 /// system-supported path. Raw HID output reports work for rumble + triggers but
@@ -37,35 +38,132 @@ final class GameControllerBridge {
             return
         }
         controller = c
-        NSLog("GameControllerBridge: attached to %@ (light=%@)",
-              c.vendorName ?? "?", c.light != nil ? "yes" : "no")
+        NSLog("GameControllerBridge: attached to %@ (light=%@, haptics=%@)",
+              c.vendorName ?? "?",
+              c.light != nil ? "yes" : "no",
+              c.haptics != nil ? "yes" : "no")
+        setupHaptics(for: c)
         onAttach?()
     }
 
     private func handleDisconnect(_ c: GCController) {
-        if controller === c { controller = nil }
+        if controller === c {
+            controller = nil
+            try? leftPlayer?.stop(atTime: 0)
+            try? rightPlayer?.stop(atTime: 0)
+            leftPlayer = nil
+            rightPlayer = nil
+            leftHaptic?.stop(completionHandler: nil)
+            rightHaptic?.stop(completionHandler: nil)
+            leftHaptic = nil
+            rightHaptic = nil
+        }
     }
 
-    private var lastLogged: (UInt8, UInt8, UInt8)?
+    /// Build per-handle CHHapticEngine instances. DualSense exposes
+    /// `.leftHandle` and `.rightHandle` as separate haptic localities so we can
+    /// drive the two motors independently — Apple's official path for rumble.
+    private func setupHaptics(for c: GCController) {
+        guard let h = c.haptics else {
+            NSLog("GCBridge.setupHaptics: controller has no haptics support")
+            return
+        }
+        if h.supportedLocalities.contains(.leftHandle) {
+            leftHaptic = h.createEngine(withLocality: .leftHandle)
+            try? leftHaptic?.start()
+            leftHaptic?.resetHandler = { [weak self] in
+                try? self?.leftHaptic?.start()
+            }
+        }
+        if h.supportedLocalities.contains(.rightHandle) {
+            rightHaptic = h.createEngine(withLocality: .rightHandle)
+            try? rightHaptic?.start()
+            rightHaptic?.resetHandler = { [weak self] in
+                try? self?.rightHaptic?.start()
+            }
+        }
+        NSLog("GCBridge.setupHaptics: leftHaptic=%@ rightHaptic=%@",
+              leftHaptic == nil ? "nil" : "ok",
+              rightHaptic == nil ? "nil" : "ok")
+    }
+
+    /// Drive both rumble motors via Apple's haptic engines. Replaces our raw
+    /// HID rumble bytes when the official path is available — should fix the
+    /// "right motor doesn't rumble" issue caused by macOS filtering raw HID writes.
+    func setRumble(_ rumble: RumbleState) {
+        let key = (rumble.leftStrength, rumble.rightStrength)
+        if key == lastRumble { return }
+        lastRumble = key
+
+        applyHaptic(strength: rumble.leftStrength,
+                    engine: leftHaptic,
+                    player: &leftPlayer,
+                    label: "left")
+        applyHaptic(strength: rumble.rightStrength,
+                    engine: rightHaptic,
+                    player: &rightPlayer,
+                    label: "right")
+    }
+
+    private func applyHaptic(strength: UInt8,
+                             engine: CHHapticEngine?,
+                             player: inout CHHapticAdvancedPatternPlayer?,
+                             label: String) {
+        guard let engine = engine else { return }
+        // Stop any in-flight player; we replace the pattern entirely each call.
+        try? player?.stop(atTime: 0)
+        player = nil
+
+        if strength == 0 {
+            NSLog("GCBridge.haptic.%@: stop", label)
+            return
+        }
+        let intensity = Float(strength) / 255.0
+        let intParam = CHHapticEventParameter(parameterID: .hapticIntensity, value: intensity)
+        let sharpParam = CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.5)
+        let event = CHHapticEvent(
+            eventType: .hapticContinuous,
+            parameters: [intParam, sharpParam],
+            relativeTime: 0,
+            duration: 30 // long; we'll stop it explicitly when strength goes to 0
+        )
+        do {
+            let pattern = try CHHapticPattern(events: [event], parameters: [])
+            let p = try engine.makeAdvancedPlayer(with: pattern)
+            try p.start(atTime: CHHapticTimeImmediate)
+            player = p
+            NSLog("GCBridge.haptic.%@: start intensity=%.2f", label, intensity)
+        } catch {
+            NSLog("GCBridge.haptic.%@: error %@", label, error.localizedDescription)
+        }
+    }
+
+    private var lastLightbarApplied: (UInt8, UInt8, UInt8)?
     private var lastLeftTrigger: TriggerEffect?
     private var lastRightTrigger: TriggerEffect?
     private var rightLogCount = 0
     private var leftLogCount = 0
+    private var leftHaptic: CHHapticEngine?
+    private var rightHaptic: CHHapticEngine?
+    private var leftPlayer: CHHapticAdvancedPatternPlayer?
+    private var rightPlayer: CHHapticAdvancedPatternPlayer?
+    private var lastRumble: (UInt8, UInt8) = (0, 0)
 
-    /// Sets the lightbar via Apple's official `GCDeviceLight` path.
+    /// Sets the lightbar via `GCDeviceLight.color` — only when the color
+    /// actually changes. Hammering this property at 30 Hz appears to cause
+    /// subsequent writes to be silently coalesced/ignored on macOS 26.
     func setLightbar(_ color: LightbarColor) {
         guard let c = controller else { return }
         guard let light = c.light else { return }
+        let key = (color.red, color.green, color.blue)
+        if let last = lastLightbarApplied, last == key { return }
+        lastLightbarApplied = key
         light.color = GCColor(
             red: Float(color.red) / 255.0,
             green: Float(color.green) / 255.0,
             blue: Float(color.blue) / 255.0
         )
-        let key = (color.red, color.green, color.blue)
-        if lastLogged == nil || lastLogged! != key {
-            NSLog("GCBridge.setLightbar: set to (%d,%d,%d)", color.red, color.green, color.blue)
-            lastLogged = key
-        }
+        NSLog("GCBridge.setLightbar: set to (%d,%d,%d)", color.red, color.green, color.blue)
     }
 
     /// Sets adaptive trigger effects via Apple's official `GCDualSenseAdaptiveTrigger`.
