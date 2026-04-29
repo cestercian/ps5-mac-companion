@@ -14,17 +14,6 @@ framework and raw IOKit HID.
 > [`SIGNING.md`](SIGNING.md) for the empirical signing test you can run
 > with a free Apple ID.
 
-## Screenshots
-
-The menubar dropdown with quick controls and color presets:
-
-![Menubar dropdown](docs/screenshots/menubar.png)
-
-The Settings window with all five tabs (Lightbar, Triggers, Motors, LEDs,
-Input Tester):
-
-![Settings window](docs/screenshots/settings.png)
-
 ## Status at a glance
 
 Tested on macOS 13, macOS 14, and macOS 26.4 with DualSense over USB-C and
