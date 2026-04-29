@@ -1,0 +1,467 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		08693C79509DC04A03111882 /* InputReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00C670002F1E9B3217E9418 /* InputReport.swift */; };
+		0CFED3EF32494CD16677C7A4 /* RumbleMotors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECD59345C295C5E7D8FB31D /* RumbleMotors.swift */; };
+		1169079BD561C81B1AD385A9 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 579338667E77E218C8B5E848 /* AppKit.framework */; };
+		21322A4D86A9ECE85419FA29 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6C809F23FB941D1EA35FA9 /* Profile.swift */; };
+		23B651E50EF9DF0C3AB2C0F8 /* LightbarEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB14B943780D9300C65FF297 /* LightbarEffect.swift */; };
+		388B5358B440F63C3530FBC3 /* TriggerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB4A44AC8092E237C41C95D /* TriggerEffect.swift */; };
+		3961C6CE95A702EAF6B66191 /* MotorsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD42B420675CEA516F81582E /* MotorsTab.swift */; };
+		3C1EA555080BABCF247DD709 /* MenuBarRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A41DA862129D588673B57 /* MenuBarRootView.swift */; };
+		3FAC9296544A23208C55AB5B /* MicLED.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5234A079485ECB64EFEF700 /* MicLED.swift */; };
+		6639C030EF78B21A39FFCCA4 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18891417FD4492237A341E1D /* ProfileStore.swift */; };
+		72A9749F7B202FE5484A2B3D /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6894B81B0E6DBF37939CAC9 /* AppState.swift */; };
+		756D15E12F3C05B4CCC2F563 /* GameControllerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DACDCB8C3CEEB78D3158FD7 /* GameControllerBridge.swift */; };
+		7BDC322DB3E695C8824A65B0 /* PlayerLED.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F58E7855AAA49D25D036960 /* PlayerLED.swift */; };
+		7F3015B6FD1945166ED70942 /* InputTesterTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5963EAE99FD5BF3F1C8734 /* InputTesterTab.swift */; };
+		81537AD0219863B33E7707B5 /* DualSenseMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD5D0F9A92C7B7C98B1EDF /* DualSenseMacApp.swift */; };
+		940E75AF618D96D6A3CF7453 /* TriggersTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CE907C4F2310103F0F0E15 /* TriggersTab.swift */; };
+		B0F811969736AEB960645B9B /* DualSenseDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C61D94F8E298C8AF5B2FA9 /* DualSenseDevice.swift */; };
+		B4492938E12ECC3B63023754 /* OutputReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2253D329C2E044610F3889ED /* OutputReport.swift */; };
+		BFB66697310F80A7F4C4E4D4 /* CoreHaptics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C0F0013088197EDDF06A16 /* CoreHaptics.framework */; };
+		CB1A052A77CF836E77871051 /* LEDsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8A61F6BAD1C34C207B6918 /* LEDsTab.swift */; };
+		D323E95A67FF0BEB09524BE3 /* HIDDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65002C2F9BED39FF981475D9 /* HIDDevice.swift */; };
+		D3DE10D191566B7F8C55C447 /* LightbarTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D27F4E19298A5FFC72F996 /* LightbarTab.swift */; };
+		DFB83E0D2C8BEFDE7B8C15F9 /* SettingsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB938269D0F33F9F246D9513 /* SettingsWindow.swift */; };
+		E7FB094F112C12555DC759B7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6906ED586A7D7DB33A3843CA /* IOKit.framework */; };
+		F0856068AC0FF8E23F45A14F /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 919457EA47366A33E97CCD5F /* GameController.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		15C61D94F8E298C8AF5B2FA9 /* DualSenseDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualSenseDevice.swift; sourceTree = "<group>"; };
+		18891417FD4492237A341E1D /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
+		2253D329C2E044610F3889ED /* OutputReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputReport.swift; sourceTree = "<group>"; };
+		3D8A61F6BAD1C34C207B6918 /* LEDsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LEDsTab.swift; sourceTree = "<group>"; };
+		579338667E77E218C8B5E848 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		65002C2F9BED39FF981475D9 /* HIDDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDDevice.swift; sourceTree = "<group>"; };
+		65FF772ADEF8E10FFD28CB8E /* PS5MacCompanion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PS5MacCompanion.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6906ED586A7D7DB33A3843CA /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		6FB4A44AC8092E237C41C95D /* TriggerEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerEffect.swift; sourceTree = "<group>"; };
+		72D27F4E19298A5FFC72F996 /* LightbarTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightbarTab.swift; sourceTree = "<group>"; };
+		7DACDCB8C3CEEB78D3158FD7 /* GameControllerBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControllerBridge.swift; sourceTree = "<group>"; };
+		919457EA47366A33E97CCD5F /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
+		9F58E7855AAA49D25D036960 /* PlayerLED.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerLED.swift; sourceTree = "<group>"; };
+		B6894B81B0E6DBF37939CAC9 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		BB938269D0F33F9F246D9513 /* SettingsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindow.swift; sourceTree = "<group>"; };
+		BCCD5D0F9A92C7B7C98B1EDF /* DualSenseMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualSenseMacApp.swift; sourceTree = "<group>"; };
+		CD7A41DA862129D588673B57 /* MenuBarRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarRootView.swift; sourceTree = "<group>"; };
+		CECD59345C295C5E7D8FB31D /* RumbleMotors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RumbleMotors.swift; sourceTree = "<group>"; };
+		D4CE907C4F2310103F0F0E15 /* TriggersTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggersTab.swift; sourceTree = "<group>"; };
+		D5C0F0013088197EDDF06A16 /* CoreHaptics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreHaptics.framework; path = System/Library/Frameworks/CoreHaptics.framework; sourceTree = SDKROOT; };
+		DE6C809F23FB941D1EA35FA9 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		E5234A079485ECB64EFEF700 /* MicLED.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicLED.swift; sourceTree = "<group>"; };
+		EA5963EAE99FD5BF3F1C8734 /* InputTesterTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTesterTab.swift; sourceTree = "<group>"; };
+		EB14B943780D9300C65FF297 /* LightbarEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightbarEffect.swift; sourceTree = "<group>"; };
+		F00C670002F1E9B3217E9418 /* InputReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputReport.swift; sourceTree = "<group>"; };
+		FD42B420675CEA516F81582E /* MotorsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotorsTab.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		24D8476F14B8934E3D13DFC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7FB094F112C12555DC759B7 /* IOKit.framework in Frameworks */,
+				1169079BD561C81B1AD385A9 /* AppKit.framework in Frameworks */,
+				F0856068AC0FF8E23F45A14F /* GameController.framework in Frameworks */,
+				BFB66697310F80A7F4C4E4D4 /* CoreHaptics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		042D8DEBBB3CCFE93C85C495 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				EA5963EAE99FD5BF3F1C8734 /* InputTesterTab.swift */,
+				3D8A61F6BAD1C34C207B6918 /* LEDsTab.swift */,
+				72D27F4E19298A5FFC72F996 /* LightbarTab.swift */,
+				CD7A41DA862129D588673B57 /* MenuBarRootView.swift */,
+				FD42B420675CEA516F81582E /* MotorsTab.swift */,
+				BB938269D0F33F9F246D9513 /* SettingsWindow.swift */,
+				D4CE907C4F2310103F0F0E15 /* TriggersTab.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		0B491E53907964B4B33D0DA5 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				EB14B943780D9300C65FF297 /* LightbarEffect.swift */,
+				E5234A079485ECB64EFEF700 /* MicLED.swift */,
+				9F58E7855AAA49D25D036960 /* PlayerLED.swift */,
+				CECD59345C295C5E7D8FB31D /* RumbleMotors.swift */,
+				6FB4A44AC8092E237C41C95D /* TriggerEffect.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		77165B14CBDD118A83A1CF28 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				DE6C809F23FB941D1EA35FA9 /* Profile.swift */,
+				18891417FD4492237A341E1D /* ProfileStore.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		7B435F99164850A1ECF0D1A6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				579338667E77E218C8B5E848 /* AppKit.framework */,
+				D5C0F0013088197EDDF06A16 /* CoreHaptics.framework */,
+				919457EA47366A33E97CCD5F /* GameController.framework */,
+				6906ED586A7D7DB33A3843CA /* IOKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8155D522BD7213DAC58ECBC4 /* HID */ = {
+			isa = PBXGroup;
+			children = (
+				15C61D94F8E298C8AF5B2FA9 /* DualSenseDevice.swift */,
+				7DACDCB8C3CEEB78D3158FD7 /* GameControllerBridge.swift */,
+				65002C2F9BED39FF981475D9 /* HIDDevice.swift */,
+				F00C670002F1E9B3217E9418 /* InputReport.swift */,
+				2253D329C2E044610F3889ED /* OutputReport.swift */,
+			);
+			path = HID;
+			sourceTree = "<group>";
+		};
+		9D124E0F665A3F78F7A681B2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65FF772ADEF8E10FFD28CB8E /* PS5MacCompanion.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A179722BF67074FBBAB83994 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B6894B81B0E6DBF37939CAC9 /* AppState.swift */,
+				BCCD5D0F9A92C7B7C98B1EDF /* DualSenseMacApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D132282E472C76D125F3A0C9 = {
+			isa = PBXGroup;
+			children = (
+				EE868B291979B02994AA6609 /* Sources */,
+				7B435F99164850A1ECF0D1A6 /* Frameworks */,
+				9D124E0F665A3F78F7A681B2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E530A2995D409512A7EAD184 /* DualSenseMac */ = {
+			isa = PBXGroup;
+			children = (
+				A179722BF67074FBBAB83994 /* App */,
+				8155D522BD7213DAC58ECBC4 /* HID */,
+				77165B14CBDD118A83A1CF28 /* Persistence */,
+				0B491E53907964B4B33D0DA5 /* Protocol */,
+				042D8DEBBB3CCFE93C85C495 /* UI */,
+			);
+			path = DualSenseMac;
+			sourceTree = "<group>";
+		};
+		EE868B291979B02994AA6609 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				E530A2995D409512A7EAD184 /* DualSenseMac */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E13C3B72EB41F9C87FD05C68 /* PS5MacCompanion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4FA4FC7DC35B9AF19042976C /* Build configuration list for PBXNativeTarget "PS5MacCompanion" */;
+			buildPhases = (
+				25CABE0D32BFE749191A3B7A /* Sources */,
+				24D8476F14B8934E3D13DFC3 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PS5MacCompanion;
+			packageProductDependencies = (
+			);
+			productName = PS5MacCompanion;
+			productReference = 65FF772ADEF8E10FFD28CB8E /* PS5MacCompanion.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		465388863D3EE675328112E7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					E13C3B72EB41F9C87FD05C68 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 58A8853E3AE1EB28079BF321 /* Build configuration list for PBXProject "PS5MacCompanion" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = D132282E472C76D125F3A0C9;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 9D124E0F665A3F78F7A681B2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E13C3B72EB41F9C87FD05C68 /* PS5MacCompanion */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		25CABE0D32BFE749191A3B7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				72A9749F7B202FE5484A2B3D /* AppState.swift in Sources */,
+				B0F811969736AEB960645B9B /* DualSenseDevice.swift in Sources */,
+				81537AD0219863B33E7707B5 /* DualSenseMacApp.swift in Sources */,
+				756D15E12F3C05B4CCC2F563 /* GameControllerBridge.swift in Sources */,
+				D323E95A67FF0BEB09524BE3 /* HIDDevice.swift in Sources */,
+				08693C79509DC04A03111882 /* InputReport.swift in Sources */,
+				7F3015B6FD1945166ED70942 /* InputTesterTab.swift in Sources */,
+				CB1A052A77CF836E77871051 /* LEDsTab.swift in Sources */,
+				23B651E50EF9DF0C3AB2C0F8 /* LightbarEffect.swift in Sources */,
+				D3DE10D191566B7F8C55C447 /* LightbarTab.swift in Sources */,
+				3C1EA555080BABCF247DD709 /* MenuBarRootView.swift in Sources */,
+				3FAC9296544A23208C55AB5B /* MicLED.swift in Sources */,
+				3961C6CE95A702EAF6B66191 /* MotorsTab.swift in Sources */,
+				B4492938E12ECC3B63023754 /* OutputReport.swift in Sources */,
+				7BDC322DB3E695C8824A65B0 /* PlayerLED.swift in Sources */,
+				21322A4D86A9ECE85419FA29 /* Profile.swift in Sources */,
+				6639C030EF78B21A39FFCCA4 /* ProfileStore.swift in Sources */,
+				0CFED3EF32494CD16677C7A4 /* RumbleMotors.swift in Sources */,
+				DFB83E0D2C8BEFDE7B8C15F9 /* SettingsWindow.swift in Sources */,
+				388B5358B440F63C3530FBC3 /* TriggerEffect.swift in Sources */,
+				940E75AF618D96D6A3CF7453 /* TriggersTab.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		448557C463FC714C711E5A7F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/DualSenseMac/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		6CD91E3CD66CDFA2BAF7890F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_GCSupportsControllerUserInteraction = YES;
+				INFOPLIST_KEY_GCSupportsGameMode = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ps5maccompanion.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		A37E916F169B65912A49F960 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/DualSenseMac/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		B1F17F650145CD9F6CBDA20D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_GCSupportsControllerUserInteraction = YES;
+				INFOPLIST_KEY_GCSupportsGameMode = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ps5maccompanion.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4FA4FC7DC35B9AF19042976C /* Build configuration list for PBXNativeTarget "PS5MacCompanion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A37E916F169B65912A49F960 /* Debug */,
+				448557C463FC714C711E5A7F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		58A8853E3AE1EB28079BF321 /* Build configuration list for PBXProject "PS5MacCompanion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1F17F650145CD9F6CBDA20D /* Debug */,
+				6CD91E3CD66CDFA2BAF7890F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 465388863D3EE675328112E7 /* Project object */;
+}

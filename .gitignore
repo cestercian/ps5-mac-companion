@@ -1,10 +1,14 @@
 .build/
 .swiftpm/
 DerivedData/
-*.xcodeproj/
 .DS_Store
 Package.resolved
 DualSenseMac.app/
 PS5MacCompanion.app/
 ps5-controller-control-macbool/
 Dualsense-Multiplatform/
+# We DO want PS5MacCompanion.xcodeproj checked in (xcodegen-generated, but
+# committing it lets users open + sign without installing xcodegen first).
+# Other .xcodeproj patterns still ignored.
+*.xcuserdata/
+*.xcuserstate
