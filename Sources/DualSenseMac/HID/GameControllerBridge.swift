@@ -42,6 +42,20 @@ final class GameControllerBridge {
               c.vendorName ?? "?",
               c.light != nil ? "yes" : "no",
               c.haptics != nil ? "yes" : "no")
+
+        // Claim the controller as Player 1. This signals to macOS's
+        // GameController framework that our app is actively using the
+        // controller — without it, setMode/setColor calls may be treated as
+        // background hints and silently dropped.
+        c.playerIndex = .index1
+
+        // Register a no-op value handler. The act of installing a handler
+        // tells the framework we're consuming controller events, which moves
+        // us from "observer" to "active user" status for output features.
+        c.extendedGamepad?.valueChangedHandler = { _, _ in
+            // Just claiming — actual input parsing happens via raw HID.
+        }
+
         setupHaptics(for: c)
         onAttach?()
     }
@@ -68,6 +82,9 @@ final class GameControllerBridge {
             NSLog("GCBridge.setupHaptics: controller has no haptics support")
             return
         }
+        let names = h.supportedLocalities.map { $0.rawValue }.joined(separator: ", ")
+        NSLog("GCBridge.haptics.supportedLocalities: [%@]", names)
+
         if h.supportedLocalities.contains(.leftHandle) {
             leftHaptic = h.createEngine(withLocality: .leftHandle)
             try? leftHaptic?.start()
@@ -190,6 +207,26 @@ final class GameControllerBridge {
         rightLogCount += 1
         lastLeftTrigger = left
         lastRightTrigger = right
+
+        // 250ms after a mode change, read back trigger.mode + trigger.status
+        // and log them — proves whether macOS actually accepted the setMode
+        // call. Apple's header explicitly notes the mode property reflects
+        // physical state and updates after a controller round-trip.
+        if leftChanged || rightChanged {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+                guard let self,
+                      let dualsense = (self.controller?.extendedGamepad as? GCDualSenseGamepad)
+                        ?? (self.controller?.physicalInputProfile as? GCDualSenseGamepad)
+                else { return }
+                NSLog("GCBridge.readback L2: mode=%ld status=%ld arm=%.2f | R2: mode=%ld status=%ld arm=%.2f",
+                      dualsense.leftTrigger.mode.rawValue,
+                      dualsense.leftTrigger.status.rawValue,
+                      dualsense.leftTrigger.armPosition,
+                      dualsense.rightTrigger.mode.rawValue,
+                      dualsense.rightTrigger.status.rawValue,
+                      dualsense.rightTrigger.armPosition)
+            }
+        }
     }
 
     private func apply(effect: TriggerEffect,
