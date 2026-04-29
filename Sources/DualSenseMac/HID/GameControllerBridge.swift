@@ -170,10 +170,12 @@ final class GameControllerBridge {
     /// Re-applies every call (no dedup) so the framework can't lose the mode
     /// between renders, and so changes via the UI take effect immediately.
     func setTriggers(left: TriggerEffect, right: TriggerEffect) {
-        guard let c = controller,
-              let dualsense = c.physicalInputProfile as? GCDualSenseGamepad else {
-            return
-        }
+        guard let c = controller else { return }
+        // Prefer extendedGamepad cast (Apple's idiomatic path); fall back to
+        // physicalInputProfile in case the cast doesn't resolve on some firmware.
+        let dualsense = (c.extendedGamepad as? GCDualSenseGamepad)
+            ?? (c.physicalInputProfile as? GCDualSenseGamepad)
+        guard let dualsense else { return }
         // Always re-apply both. Log only when value changes (to keep log readable)
         // or the first 3 times after attach (to confirm fire path).
         let leftChanged = lastLeftTrigger != left
@@ -215,16 +217,18 @@ final class GameControllerBridge {
             if shouldLog { NSLog("GCBridge.%@: weapon s=%.2f e=%.2f str=%.2f", label, s, e, str) }
 
         case .vibration(let frequency, let position, let amplitude):
-            let pos = Int(min(position, 9))
+            // CRITICAL: Per Apple's header docs, `frequency` is NORMALIZED 0..1 —
+            // NOT a Hz value. Our UI exposes 1..80 (Hz-like) so we divide.
+            // amplitude is also normalized 0..1.
+            let startPos = Float(min(position, 9)) / 9.0
             let amp = Float(min(amplitude, 8)) / 8.0
-            let freq = Float(max(1, frequency))
-            func a(_ i: Int) -> Float { i >= pos ? amp : 0 }
-            let amps = GCDualSenseAdaptiveTrigger.PositionalAmplitudes(values: (
-                a(0), a(1), a(2), a(3), a(4),
-                a(5), a(6), a(7), a(8), a(9)
-            ))
-            trigger.setModeVibration(amplitudes: amps, frequency: freq)
-            if shouldLog { NSLog("GCBridge.%@: vibration startPos=%d amp=%.2f freq=%.0f", label, pos, amp, freq) }
+            let freq = min(max(Float(frequency) / 80.0, 0), 1)
+            // Use the simpler single-value API (macOS 11.3+) instead of the
+            // positional 10-element variant (12.3+). More compatible and matches
+            // our UI's per-trigger semantics.
+            trigger.setModeVibrationWithStartPosition(startPos, amplitude: amp, frequency: freq)
+            if shouldLog { NSLog("GCBridge.%@: vibration startPos=%.2f amp=%.2f freq=%.2f (raw input freq=%d)",
+                                 label, startPos, amp, freq, frequency) }
 
         case .slope(let start, let end, let startStrength, let endStrength):
             let s = Float(min(start, 8)) / 9.0
