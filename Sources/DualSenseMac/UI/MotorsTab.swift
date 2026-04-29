@@ -17,7 +17,7 @@ struct MotorsTab: View {
                 }
                 Slider(value: Binding(
                     get: { Double(state.profile.rumble.leftStrength) },
-                    set: { state.profile.rumble.leftStrength = UInt8($0) }
+                    set: { v in defer_ { state.profile.rumble.leftStrength = UInt8(v) } }
                 ), in: 0...255, step: 1)
             }
 
@@ -31,14 +31,14 @@ struct MotorsTab: View {
                 }
                 Slider(value: Binding(
                     get: { Double(state.profile.rumble.rightStrength) },
-                    set: { state.profile.rumble.rightStrength = UInt8($0) }
+                    set: { v in defer_ { state.profile.rumble.rightStrength = UInt8(v) } }
                 ), in: 0...255, step: 1)
             }
 
             HStack {
                 Button("Test Rumble (500ms)") { state.testRumble(milliseconds: 500) }
                     .disabled(!state.connected)
-                Button("Stop") { state.profile.rumble = .off }
+                Button("Stop") { defer_ { state.profile.rumble = .off } }
             }
 
             Spacer()

@@ -18,14 +18,17 @@ struct LightbarTab: View {
 
             ColorPicker("Color", selection: Binding(
                 get: { state.profile.lightbar.swiftUIColor },
-                set: { state.profile.lightbar = LightbarColor(swiftUIColor: $0) }
+                set: { newColor in
+                    let lc = LightbarColor(swiftUIColor: newColor)
+                    defer_ { state.profile.lightbar = lc }
+                }
             ), supportsOpacity: false)
 
             Text("Presets").font(.headline)
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 3), spacing: 8) {
                 ForEach(presets, id: \.0) { name, color in
                     Button {
-                        state.profile.lightbar = color
+                        defer_ { state.profile.lightbar = color }
                     } label: {
                         HStack {
                             RoundedRectangle(cornerRadius: 4)

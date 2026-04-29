@@ -12,14 +12,14 @@ struct TriggersTab: View {
                     title: "L2 (Left)",
                     effect: Binding(
                         get: { state.profile.leftTrigger },
-                        set: { state.profile.leftTrigger = $0 }
+                        set: { newValue in defer_ { state.profile.leftTrigger = newValue } }
                     )
                 )
                 TriggerEditor(
                     title: "R2 (Right)",
                     effect: Binding(
                         get: { state.profile.rightTrigger },
-                        set: { state.profile.rightTrigger = $0 }
+                        set: { newValue in defer_ { state.profile.rightTrigger = newValue } }
                     )
                 )
             }

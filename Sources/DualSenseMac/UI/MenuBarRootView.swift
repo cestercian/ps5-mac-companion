@@ -9,7 +9,7 @@ struct MenuBarRootView: View {
         Button {
             NSLog("MenuBar preset tapped: %@ (%d,%d,%d)",
                   tooltip, color.red, color.green, color.blue)
-            state.profile.lightbar = color
+            defer_ { state.profile.lightbar = color }
         } label: {
             RoundedRectangle(cornerRadius: 4)
                 .fill(color.swiftUIColor)
@@ -46,7 +46,7 @@ struct MenuBarRootView: View {
                     let lc = LightbarColor(swiftUIColor: newColor)
                     NSLog("MenuBar.ColorPicker.set: user picked (%d,%d,%d)",
                           lc.red, lc.green, lc.blue)
-                    state.profile.lightbar = lc
+                    defer_ { state.profile.lightbar = lc }
                 }
             ), supportsOpacity: false)
 
