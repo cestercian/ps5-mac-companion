@@ -12,20 +12,25 @@ final class GameControllerBridge {
     var onAttach: (() -> Void)?
 
     init() {
+        // Extract sendable values (GCController is reference-typed and safe to
+        // pass across actors; Notification is not Sendable so we never close
+        // over it inside an async hop).
         NotificationCenter.default.addObserver(
             forName: .GCControllerDidConnect,
             object: nil, queue: .main
         ) { [weak self] note in
-            Task { @MainActor in
-                if let c = note.object as? GCController { self?.handleConnect(c) }
+            let c = note.object as? GCController
+            DispatchQueue.main.async { [weak self] in
+                if let self, let c { self.handleConnect(c) }
             }
         }
         NotificationCenter.default.addObserver(
             forName: .GCControllerDidDisconnect,
             object: nil, queue: .main
         ) { [weak self] note in
-            Task { @MainActor in
-                if let c = note.object as? GCController { self?.handleDisconnect(c) }
+            let c = note.object as? GCController
+            DispatchQueue.main.async { [weak self] in
+                if let self, let c { self.handleDisconnect(c) }
             }
         }
         // Pick up controllers that were already paired before the app launched.

@@ -29,12 +29,12 @@ final class AppState: ObservableObject {
     init() {
         self.profile = ProfileStore.load()
         manager.onConnect = { [weak self] hid, transport in
-            Task { @MainActor in
+            DispatchQueue.main.async { [weak self] in
                 self?.handleConnect(hid: hid, transport: transport)
             }
         }
         manager.onDisconnect = { [weak self] in
-            Task { @MainActor in
+            DispatchQueue.main.async { [weak self] in
                 self?.handleDisconnect()
             }
         }
@@ -56,7 +56,7 @@ final class AppState: ObservableObject {
         connected = true
         hid.onInputReport = { [weak self] data in
             guard let parsed = DualSenseInput.parse(usbReport: data) else { return }
-            Task { @MainActor in
+            DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 if self.input.batteryLevel != parsed.batteryLevel
                     || self.input.batteryCharging != parsed.batteryCharging {
@@ -72,7 +72,9 @@ final class AppState: ObservableObject {
         // 30 Hz so system overrides get stomped within ~33 ms.
         keepaliveTimer?.invalidate()
         keepaliveTimer = Timer.scheduledTimer(withTimeInterval: 1.0 / 30.0, repeats: true) { [weak self] _ in
-            Task { @MainActor in self?.pushOutput() }
+            // Timer with default scheduling fires on the run loop it was
+            // installed on (main runloop here) — no Task hop needed.
+            DispatchQueue.main.async { [weak self] in self?.pushOutput() }
         }
     }
 
@@ -86,8 +88,10 @@ final class AppState: ObservableObject {
     /// Coalesce rapid UI changes (slider drags) into ~30Hz output writes.
     private func scheduleOutputPush() {
         pushWorkItem?.cancel()
+        // The work item runs on the main queue (we schedule it via
+        // asyncAfter on .main below), so we can call pushOutput directly.
         let work = DispatchWorkItem { [weak self] in
-            Task { @MainActor in self?.pushOutput() }
+            self?.pushOutput()
         }
         pushWorkItem = work
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.033, execute: work)
