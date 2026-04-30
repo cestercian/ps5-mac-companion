@@ -32,6 +32,7 @@ Bluetooth.
 | Adaptive triggers                    |       ✓       |     Blocked              |
 | Player LEDs / mic LED                |       ✓       |     Partial              |
 | Settings persistence                 |       ✓       |             ✓            |
+| Vibrate on system notifications      |       ✓       |             ✓            |
 
 See [Known Issues](#known-issues) for the full diagnostic story behind the
 "Blocked" rows.
@@ -91,6 +92,12 @@ The following are wired end-to-end in v0.1.0:
 - **Comprehensive logging** — every output write and a 250 ms-deferred
   trigger status readback is logged via `NSLog` to both stderr and the
   unified log (visible in `Console.app`).
+- **Vibrate on system notifications** — toggle it in the menubar dropdown.
+  The app polls the macOS Notification Center SQLite database once per
+  second and pulses both rumble motors for ~3 seconds whenever a new
+  notification from any app arrives. Requires Full Disk Access (the NC
+  database is sandboxed) — the menubar dropdown shows a deep-link button
+  to the right pane in System Settings if access hasn't been granted yet.
 
 ## Architecture
 
@@ -116,6 +123,8 @@ Sources/DualSenseMac/
   Persistence/
     Profile.swift
     ProfileStore.swift         // JSON to ~/Library/Application Support/
+  Notifications/
+    NotificationWatcher.swift  // SQLite poll of NC database (FDA-gated)
 ```
 
 The app deliberately drives the controller through **two parallel paths**:

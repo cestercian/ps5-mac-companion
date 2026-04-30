@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- **Vibrate on system notifications.** New `NotificationWatcher` polls the
+  macOS Notification Center SQLite database (`~/Library/Group
+  Containers/group.com.apple.usernoted/db2/db`) once per second and
+  triggers a 3-second rumble pulse on both motors for each new notification
+  from any app. Requires Full Disk Access. UI toggle in the menubar with a
+  deep-link button to the right pane in System Settings if access isn't
+  granted yet.
+- Profile fields: `notificationsEnabled` (Bool),
+  `notificationRumbleDurationMs` (Int), `notificationRumbleStrength` (UInt8).
+
 ## [0.1.0] — 2026-04-29
 
 First public release. v1 baseline: native menubar app for the DualSense

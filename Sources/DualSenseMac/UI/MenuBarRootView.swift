@@ -65,6 +65,43 @@ struct MenuBarRootView: View {
 
             Divider()
 
+            // Notification → vibration toggle. Disabled if app doesn't yet
+            // have Full Disk Access — needed to read the macOS Notification
+            // Center SQLite database.
+            VStack(alignment: .leading, spacing: 4) {
+                Toggle(isOn: Binding(
+                    get: { state.profile.notificationsEnabled },
+                    set: { newValue in defer_ { state.profile.notificationsEnabled = newValue } }
+                )) {
+                    Text("Vibrate on notifications")
+                }
+                .disabled(!state.hasFullDiskAccess && !state.profile.notificationsEnabled)
+
+                if state.hasFullDiskAccess {
+                    Text("Pulses both motors for \(state.profile.notificationRumbleDurationMs / 1000)s per notification.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                } else {
+                    Text("Requires Full Disk Access (NC database is sandboxed).")
+                        .font(.caption)
+                        .foregroundColor(.orange)
+                    HStack(spacing: 6) {
+                        Button("Open System Settings") {
+                            NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")!)
+                        }
+                        .buttonStyle(.borderless)
+                        .font(.caption)
+                        Button("Re-check") {
+                            state.refreshFullDiskAccess()
+                        }
+                        .buttonStyle(.borderless)
+                        .font(.caption)
+                    }
+                }
+            }
+
+            Divider()
+
             Button("Open Settings…") {
                 NSApp.setActivationPolicy(.regular)
                 openWindow(id: "settings")

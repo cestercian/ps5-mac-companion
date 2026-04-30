@@ -18,7 +18,8 @@ let package = Package(
                 .linkedFramework("IOKit"),
                 .linkedFramework("AppKit"),
                 .linkedFramework("SwiftUI"),
-                .linkedFramework("GameController")
+                .linkedFramework("GameController"),
+                .linkedLibrary("sqlite3")
             ]
         )
     ]

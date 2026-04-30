@@ -14,6 +14,14 @@ final class AppState: ObservableObject {
                       oldValue.lightbar.red, oldValue.lightbar.green, oldValue.lightbar.blue,
                       profile.lightbar.red, profile.lightbar.green, profile.lightbar.blue)
             }
+            // When the user toggles notifications, start/stop the watcher.
+            if oldValue.notificationsEnabled != profile.notificationsEnabled {
+                if profile.notificationsEnabled {
+                    startNotificationWatcher()
+                } else {
+                    notificationWatcher.stop()
+                }
+            }
             ProfileStore.save(profile)
             scheduleOutputPush()
         }
@@ -21,10 +29,14 @@ final class AppState: ObservableObject {
 
     private let manager = DualSenseManager()
     private let gcBridge = GameControllerBridge()
+    private let notificationWatcher = NotificationWatcher()
     private var device: HIDDevice?
     private var pushWorkItem: DispatchWorkItem?
     private var keepaliveTimer: Timer?
     private var pushesLogged = 0
+    private var notificationRumbleTimer: Timer?
+
+    @Published private(set) var hasFullDiskAccess: Bool = NotificationWatcher.hasFullDiskAccess()
 
     init() {
         self.profile = ProfileStore.load()
@@ -44,9 +56,57 @@ final class AppState: ObservableObject {
             guard let self else { return }
             self.gcBridge.setLightbar(self.profile.lightbar)
         }
+        // Wire up the notification → vibration callback. The watcher fires
+        // on the main thread; we just trigger a rumble pulse that runs for
+        // profile.notificationRumbleDurationMs milliseconds.
+        notificationWatcher.onNewNotifications = { [weak self] _ in
+            self?.fireNotificationRumble()
+        }
+
         // Defer HID start until after the SwiftUI scene graph + run loop are fully up.
         DispatchQueue.main.async { [weak self] in
             self?.manager.start()
+            // If the user already had notifications enabled in the persisted
+            // profile, kick the watcher on too.
+            if self?.profile.notificationsEnabled == true {
+                self?.startNotificationWatcher()
+            }
+        }
+    }
+
+    private func startNotificationWatcher() {
+        // Refresh FDA status — the user may have just granted it via System Settings.
+        hasFullDiskAccess = NotificationWatcher.hasFullDiskAccess()
+        if !hasFullDiskAccess {
+            NSLog("AppState: cannot start NotificationWatcher — Full Disk Access not granted")
+            return
+        }
+        notificationWatcher.start()
+    }
+
+    /// Fires a 3-second (configurable) rumble pulse on both motors when a
+    /// new system notification arrives. Cancels any in-flight notification
+    /// rumble so back-to-back notifications don't queue up forever.
+    private func fireNotificationRumble() {
+        notificationRumbleTimer?.invalidate()
+        let strength = profile.notificationRumbleStrength
+        profile.rumble = RumbleState(leftStrength: strength, rightStrength: strength)
+        let duration = TimeInterval(profile.notificationRumbleDurationMs) / 1000.0
+        notificationRumbleTimer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false) { [weak self] _ in
+            DispatchQueue.main.async { [weak self] in
+                self?.profile.rumble = .off
+            }
+        }
+    }
+
+    /// Re-check whether our app currently has Full Disk Access. Call this
+    /// after the user grants access via System Settings so the UI updates.
+    func refreshFullDiskAccess() {
+        hasFullDiskAccess = NotificationWatcher.hasFullDiskAccess()
+        // If the user just granted FDA AND notifications are enabled in
+        // their profile but the watcher isn't running, start it now.
+        if hasFullDiskAccess && profile.notificationsEnabled && !notificationWatcher.isRunning {
+            notificationWatcher.start()
         }
     }
 
