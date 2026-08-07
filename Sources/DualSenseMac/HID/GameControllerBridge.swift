@@ -68,6 +68,9 @@ final class GameControllerBridge {
     private func handleDisconnect(_ c: GCController) {
         if controller === c {
             controller = nil
+            lastLightbarApplied = nil
+            lastLeftTrigger = nil
+            lastRightTrigger = nil
             try? leftPlayer?.stop(atTime: 0)
             try? rightPlayer?.stop(atTime: 0)
             leftPlayer = nil
