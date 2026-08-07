@@ -68,6 +68,10 @@ final class GameControllerBridge {
     private func handleDisconnect(_ c: GCController) {
         if controller === c {
             controller = nil
+            lastLightbarApplied = nil
+            lastLeftTrigger = nil
+            lastRightTrigger = nil
+            lastRumble = nil
             try? leftPlayer?.stop(atTime: 0)
             try? rightPlayer?.stop(atTime: 0)
             leftPlayer = nil
@@ -169,7 +173,7 @@ final class GameControllerBridge {
     private var rightHaptic: CHHapticEngine?
     private var leftPlayer: CHHapticAdvancedPatternPlayer?
     private var rightPlayer: CHHapticAdvancedPatternPlayer?
-    private var lastRumble: (UInt8, UInt8) = (0, 0)
+    private var lastRumble: (UInt8, UInt8)?
 
     /// Sets the lightbar via `GCDeviceLight.color` — only when the color
     /// actually changes. Hammering this property at 30 Hz appears to cause
